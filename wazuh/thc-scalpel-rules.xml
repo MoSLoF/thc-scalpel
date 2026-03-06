@@ -1,0 +1,64 @@
+<!--
+  Wazuh Rules: THC Scalpel HBV Fork
+  Author  : HoneyBadger Vanguard, LLC (ihbv.io)
+  Version : 1.1.0-HBV
+  Install : /var/ossec/etc/rules/thc-scalpel-rules.xml
+  Rule IDs: 100600-100604 (reserve this block in your local rules)
+-->
+
+<group name="reconnaissance,thc-scalpel,mitre_t1590,">
+
+  <!-- Base rule: any scalpel event -->
+  <rule id="100600" level="3">
+    <decoded_as>thc-scalpel-hbv</decoded_as>
+    <description>THC Scalpel HBV: Reconnaissance query executed [$(event_type)] against $(target)</description>
+    <mitre>
+      <id>T1590</id>
+      <id>T1596</id>
+    </mitre>
+    <group>recon,passive_recon,</group>
+  </rule>
+
+  <!-- High/Critical OPSEC footprint score -->
+  <rule id="100601" level="10">
+    <if_sid>100600</if_sid>
+    <field name="opsec_footprint" type="pcre2">^[7-9][0-9]$|^100$</field>
+    <description>THC Scalpel HBV: HIGH/CRITICAL footprint score ($(opsec_footprint)/100) — noisy recon detected</description>
+    <mitre>
+      <id>T1590</id>
+    </mitre>
+    <group>recon,high_noise,opsec_alert,</group>
+  </rule>
+
+  <!-- Subdomain takeover risk identified -->
+  <rule id="100602" level="12">
+    <if_sid>100600</if_sid>
+    <field name="event_type">^CNAME_RESULT$</field>
+    <field name="data.takeover_risk">^true$</field>
+    <description>THC Scalpel HBV: Potential subdomain takeover opportunity on $(target) — dangling CNAME detected</description>
+    <mitre>
+      <id>T1584.001</id>
+    </mitre>
+    <group>recon,takeover_risk,high_impact,</group>
+  </rule>
+
+  <!-- Subdomain enumeration completed -->
+  <rule id="100603" level="5">
+    <if_sid>100600</if_sid>
+    <field name="event_type">^SUBDOMAIN_RESULT$</field>
+    <description>THC Scalpel HBV: Subdomain enumeration completed for $(target) — $(data.count) results</description>
+    <mitre>
+      <id>T1596.001</id>
+    </mitre>
+    <group>recon,subdomain_enum,</group>
+  </rule>
+
+  <!-- Failed API requests (possible detection/blocking) -->
+  <rule id="100604" level="7">
+    <if_sid>100600</if_sid>
+    <field name="data.success">^false$</field>
+    <description>THC Scalpel HBV: API request failed for $(target) — possible blocking or detection</description>
+    <group>recon,api_failure,</group>
+  </rule>
+
+</group>

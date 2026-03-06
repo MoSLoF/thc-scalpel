@@ -1,0 +1,17 @@
+<!--
+  Wazuh Decoder: THC Scalpel HBV Fork
+  Author  : HoneyBadger Vanguard, LLC (ihbv.io)
+  Version : 1.1.0-HBV
+  Install : /var/ossec/etc/decoders/thc-scalpel-decoder.xml
+-->
+
+<decoder name="thc-scalpel-hbv">
+  <program_name>thc-scalpel-hbv</program_name>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+</decoder>
+
+<decoder name="thc-scalpel-hbv-fields">
+  <parent>thc-scalpel-hbv</parent>
+  <use_own_name>true</use_own_name>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+</decoder>
