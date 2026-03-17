@@ -193,7 +193,7 @@ begin {
   ██   ██████ ██     ▄▄▄ ▀▀▀▄▄▄ ██     ██▄▄██ ██     ██▄▄█▀ ██▄▄   ██
   ██   ██  ██ ▀█████     █████▀ ▀█████ ██  ██ ██████ ██     ██▄▄▄▄ ██████
 
-  Original: KL3FT3Z / hackteam.red  |  HBV Fork v$HBV_VERSION: ihbv.io
+  Original: KL3FT3Z / hackteam.red  |  HBV Fork v${HBV_VERSION}: ihbv.io
   MITRE: T1590.002 / T1590.004 / T1596.001
 "@ -ForegroundColor Cyan
     #endregion
@@ -672,7 +672,10 @@ end {
     $finalOpsec = Measure-OpsecFootprint
     $duration   = [int](Get-Date).Subtract($script:OpsecState.SessionStart).TotalSeconds
     $riskColor  = switch ($finalOpsec.RiskLevel) {
-        'LOW'      { 'Green' }; 'MEDIUM' { 'Yellow' }; 'HIGH' { 'DarkYellow' }; default { 'Red' }
+        'LOW'      { 'Green' }
+        'MEDIUM'   { 'Yellow' }
+        'HIGH'     { 'DarkYellow' }
+        default    { 'Red' }
     }
 
     Write-Host "`n  ──────────────────────────────────────────────────────────" -ForegroundColor DarkGray
