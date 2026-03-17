@@ -573,3 +573,26 @@ If you find THC Scalpel useful:
 [![GitHub followers](https://img.shields.io/github/followers/hackteam-red?style=social)](https://github.com/hackteam-red)
 
 </div>
+
+
+---
+
+## HoneyBadger Vanguard
+
+**Part of the [HoneyBadger Vanguard (HBV)](https://ihbv.io) purple team ecosystem.**
+
+HBV fork of THC-Scalpel with Wazuh decoder/rules integration for automated credential exposure detection.
+
+```powershell
+$global:Intent = 'Purple'  # Understand offense. Build better defense.
+```
+
+| | |
+|---|---|
+| **Org** | [MoSLoF on GitHub](https://github.com/MoSLoF) |
+| **Platform** | HoneyBadger Vanguard 2.0 |
+| **Demo Target** | CyberShield 2026 - Little Rock, AR |
+| **License** | See LICENSE |
+
+> The difference between a red team tool and a purple team tool is intent.
+> -- $global:Intent = 'Purple'
